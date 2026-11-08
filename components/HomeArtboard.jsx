@@ -619,17 +619,19 @@ export default function HomeArtboard() {
           </div>
           <p
             aria-hidden="true"
+            className="mix-blend-color-dodge"
             style={{
               position: "absolute",
               left: 507,
               top: 110,
               zIndex: 1,
+              width: 1363,
               margin: 0,
               color: "rgba(255,255,255,0.3)",
               fontSize: 250,
               fontWeight: 600,
               lineHeight: 1.5,
-              mixBlendMode: "color-dodge",
+              textAlign: "justify",
               whiteSpace: "nowrap",
               pointerEvents: "none",
             }}
