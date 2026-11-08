@@ -171,6 +171,16 @@ a:focus-visible {
   line-height: 1.5;
 }
 
+.home-hero-rule {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  right: 0;
+  top: calc(888 / 10974 * 100%);
+  border-top: 1px solid #fff;
+  pointer-events: none;
+}
+
 .home-artboard p {
   margin: 0;
 }

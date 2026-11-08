@@ -122,23 +122,33 @@ function Text({
   );
 }
 
-function Spin({ x, y, w, h, rotate = 0, iw, ih, src, blend, crop, scale = 1 }) {
-  return (
+function Spin({ x, y, w, h, rotate = 0, iw, ih, src, blend, crop, scale = 1, shade = 0 }) {
+  const imgStyle = crop
+    ? {
+        position: "absolute",
+        left: crop.left,
+        top: crop.top,
+        width: crop.width,
+        height: crop.height,
+        maxWidth: "none",
+      }
+    : {
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        maxWidth: "none",
+        objectFit: "cover",
+      };
+
+  const frame = (filter) => (
     <div
-      aria-hidden="true"
       style={{
         position: "absolute",
-        left: x,
-        top: y,
-        width: w,
-        height: h,
+        inset: 0,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        mixBlendMode: blend,
-        pointerEvents: "none",
-        transform: scale === 1 ? undefined : `scale(${scale})`,
-        transformOrigin: "center center",
       }}
     >
       <div
@@ -151,30 +161,31 @@ function Spin({ x, y, w, h, rotate = 0, iw, ih, src, blend, crop, scale = 1 }) {
           overflow: "hidden",
         }}
       >
-        <img
-          src={src}
-          alt=""
-          style={
-            crop
-              ? {
-                  position: "absolute",
-                  left: crop.left,
-                  top: crop.top,
-                  width: crop.width,
-                  height: crop.height,
-                  maxWidth: "none",
-                }
-              : {
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  maxWidth: "none",
-                  objectFit: "cover",
-                }
-          }
-        />
+        <img src={src} alt="" style={filter ? { ...imgStyle, filter } : imgStyle} />
       </div>
+    </div>
+  );
+
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        left: x,
+        top: y,
+        width: w,
+        height: h,
+        pointerEvents: "none",
+        transform: scale === 1 ? undefined : `scale(${scale})`,
+        transformOrigin: "center center",
+      }}
+    >
+      <div style={{ position: "absolute", inset: 0, mixBlendMode: blend }}>{frame()}</div>
+      {shade > 0 ? (
+        <div style={{ position: "absolute", inset: 0, mixBlendMode: "multiply", opacity: shade }}>
+          {frame("brightness(0)")}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -248,6 +259,7 @@ export default function HomeArtboard() {
   return (
     <div className="home-scale">
       <div className="home-sizer">
+        <div className="home-hero-rule" aria-hidden="true" />
         <div className="home-artboard">
           {projects2025.map((project) => (
             <ProjectCopy key={project.id} project={project} />
@@ -259,13 +271,6 @@ export default function HomeArtboard() {
           <Text x={50} y={518} size={120} weight={600} z={2}>
             designer
           </Text>
-          <img
-            src="/images/figma/line.svg"
-            alt=""
-            width={1920}
-            height={1}
-            style={{ position: "absolute", left: 0, top: 888, width: 1920, height: 1, display: "block" }}
-          />
           <SiteNav />
 
           <Text x={50} y={923} size={16} width={130} leading={1.2059}>
@@ -440,7 +445,7 @@ export default function HomeArtboard() {
                 <img
                   src="/images/figma/tape-14.png"
                   alt=""
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none", objectFit: "cover" }}
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none", objectFit: "cover", filter: "brightness(0.72)" }}
                 />
               </div>
             </div>
@@ -461,6 +466,7 @@ export default function HomeArtboard() {
             ih={1823.325}
             src="/images/figma/paper-80.png"
             blend="difference"
+            shade={0.45}
             crop={{ left: "-40.4%", top: "-43.13%", width: "199.56%", height: "215.88%" }}
           />
           <Spin
@@ -473,6 +479,7 @@ export default function HomeArtboard() {
             ih={3007.538}
             src="/images/figma/paper-16.png"
             blend="difference"
+            shade={0.45}
             crop={{ left: "-12.17%", top: "-13.5%", width: "112.17%", height: "113.5%" }}
           />
 
@@ -486,18 +493,6 @@ export default function HomeArtboard() {
             © 2025 Lisovenko Ivan
           </Text>
 
-          <Spin
-            x={-21.87}
-            y={9771}
-            w={1952.85}
-            h={1603.815}
-            rotate={89.6}
-            iw={1590.389}
-            ih={1941.87}
-            src="/images/figma/paper-black.png"
-            blend="plus-lighter"
-            crop={{ left: "-19.52%", top: "-36.77%", width: "175.3%", height: "208.33%" }}
-          />
           <Spin
             x={1168}
             y={10255}
@@ -541,13 +536,6 @@ export default function HomeArtboard() {
             </span>
             <CircleMark inline box={49.309} glyph={35} src="/images/figma/arrow-light.svg" />
           </a>
-
-          <div aria-hidden="true" style={{ position: "absolute", left: 1715, top: 9713, width: 100, height: 410, overflow: "hidden", pointerEvents: "none" }}>
-            <img src="/images/figma/paperclip.png" alt="" style={{ position: "absolute", height: "100%", left: "-89.09%", top: 0, width: "189.23%", maxWidth: "none" }} />
-          </div>
-          <div aria-hidden="true" style={{ position: "absolute", left: 1704, top: 9713, width: 111, height: 58, overflow: "hidden", pointerEvents: "none" }}>
-            <img src="/images/figma/paperclip.png" alt="" style={{ position: "absolute", height: "706.9%", left: "-70.36%", top: 0, width: "170.48%", maxWidth: "none" }} />
-          </div>
 
           <Spin x={-273} y={6830} w={841.682} h={825.525} rotate={12.04} iw={713} ih={692} src="/images/figma/tape-13.png" />
           <Spin x={1252} y={6903} w={859.904} h={603.883} rotate={21.61} iw={791.889} ih={335.806} src="/images/figma/tape-14b.png" />
@@ -629,13 +617,6 @@ export default function HomeArtboard() {
               style={{ position: "absolute", left: -219, top: -412, width: 1000, height: 1333, objectFit: "cover", maxWidth: "none" }}
             />
           </div>
-          <div aria-hidden="true" style={{ position: "absolute", left: -53, top: 1789.99, width: 206.027, height: 206.027, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
-            <div style={{ width: 191.367, height: 100, background: "#222", transform: "rotate(45deg)", flex: "none" }} />
-          </div>
-          <div aria-hidden="true" style={{ position: "absolute", left: 341.33, top: 1251.32, width: 217.371, height: 217.371, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
-            <div style={{ width: 207.409, height: 100, background: "#222", transform: "rotate(45deg)", flex: "none" }} />
-          </div>
-
           <p
             aria-hidden="true"
             style={{
@@ -644,12 +625,11 @@ export default function HomeArtboard() {
               top: 110,
               zIndex: 1,
               margin: 0,
-              color: "#fff",
-              opacity: 0.02,
+              color: "rgba(255,255,255,0.3)",
               fontSize: 250,
               fontWeight: 600,
               lineHeight: 1.5,
-              mixBlendMode: "overlay",
+              mixBlendMode: "color-dodge",
               whiteSpace: "nowrap",
               pointerEvents: "none",
             }}
