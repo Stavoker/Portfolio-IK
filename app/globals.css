@@ -1,26 +1,254 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@config "../tailwind.config.js";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-family), var(--font-poppins), sans-serif;
+  --color-ink: #121212;
+  --color-graphite: #1c1c1c;
+  --color-fog: #c8c8c8;
+  --color-mute: #9a9a9a;
+  --color-paper: #d5d5d5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  scroll-behavior: smooth !important;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body,
+main,
+.home-scale {
+  background-color: #222;
+  background-image: url("/images/figma/hero-mask.png");
+  background-size: cover;
+  background-repeat: repeat-y;
+  background-position: center top;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #f4f4f4;
+  font-family: var(--font-poppins), "Poppins", ui-sans-serif, sans-serif;
+}
+
+@media (min-width: 768px) {
+  body,
+  main,
+  .home-scale {
+    background-attachment: fixed;
+  }
+}
+
+::selection {
+  background: #f4f4f4;
+  color: #121212;
+}
+
+a:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: 3px;
+}
+
+.paper-surface {
+  background-color: #d7d7d7;
+  background-image: url("/images/web/paper.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.year-banner {
+  background-color: #2a2a2a;
+  background-image: url("/images/tape2.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.experience-strip {
+  background-color: #e6e6e6;
+  background-image: url("/images/web/paper.jpg");
+  background-size: cover;
+  background-position: center;
+  color: #141414;
+}
+
+.experience-strip:nth-child(1) {
+  clip-path: polygon(0 9%, 1.4% 0, 74% 0, 76.2% 8%, 100% 8%, 100% 90%, 96.5% 100%, 0 100%);
+  transform: rotate(-0.35deg);
+}
+
+.experience-strip:nth-child(2) {
+  clip-path: polygon(0 0, 97% 0, 100% 16%, 100% 100%, 3.5% 100%, 0 84%);
+  transform: rotate(0.4deg);
+}
+
+.experience-strip:nth-child(3) {
+  clip-path: polygon(0 12%, 2.5% 0, 100% 0, 100% 82%, 97% 100%, 0 100%);
+  transform: rotate(-0.25deg);
+}
+
+.year-sticker {
+  width: min(100%, 440px);
+  background-color: #2a2a2a;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 6px 8px 0 rgba(0, 0, 0, 0.35);
+}
+
+.year-sticker-left {
+  transform: rotate(-1.4deg);
+}
+
+.year-sticker-right {
+  transform: rotate(1.2deg);
+}
+
+.full-width-ribbon {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.full-width-ribbon-2024 {
+  height: 22vw;
+  min-height: 230px;
+}
+
+.full-width-ribbon-2025 {
+  height: 28vw;
+  min-height: 300px;
+}
+
+.ribbon-sheet {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.full-width-ribbon-2024 .ribbon-sheet {
+  object-position: center 46%;
+}
+
+.full-width-ribbon-2025 .ribbon-sheet {
+  object-position: center 48%;
+}
+
+.home-scale {
+  container-type: inline-size;
+  width: 100%;
+}
+
+.home-sizer {
+  position: relative;
+  width: 100%;
+  height: calc(10974 / 1920 * 100cqw);
+  overflow: hidden;
+  background: transparent;
+}
+
+.home-artboard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 10974px;
+  overflow: hidden;
+  transform: scale(calc(100cqw / 1920px));
+  transform-origin: top left;
+  background-color: #222;
+  color: #fff;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+  line-height: 1.5;
+}
+
+.home-artboard p {
+  margin: 0;
+}
+
+.home-artboard a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-hit {
+  position: absolute;
+  z-index: 5;
+  display: block;
+  background: transparent;
+}
+
+.home-hit:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.home-artboard a:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: 3px;
+}
+
+.home-artboard::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/figma/hero-mask.png");
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: 100% 1080px;
+  opacity: 0.5;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 180px), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 180px), transparent 100%);
+}
+
+.home-artboard .home-nav {
+  position: absolute;
+  top: 50px;
+  right: 48px;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.home-artboard .home-nav a {
+  color: #b5b5b5;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition: color 0.35s ease;
+}
+
+.home-artboard .home-nav a:hover {
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
