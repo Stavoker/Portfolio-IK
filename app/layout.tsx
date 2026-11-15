@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, type ReactNode } from "react";
 import { Poppins, Unbounded } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -49,7 +49,7 @@ export const metadata = {
     "Portfolio of Ivan Lisovenko, a UI/UX designer. Selected work from 2024 and 2025.",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
